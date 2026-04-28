@@ -67,14 +67,43 @@
   }
 
   function enableDevMode() {
+    DEV_MODE = true;
     document.body.classList.add('dev-mode');
     document.getElementById('dev-badge').hidden = false;
     // Destrava botões
     document.querySelectorAll('.mt-btn').forEach(b => b.dataset.locked = "false");
   }
 
-  // Foca no input ao abrir
-  setTimeout(() => lockInput.focus(), 300);
+  // ============================================
+  // ENTRADA DIRETA (default = sem senha, autoplay muted)
+  // Lock só ativa via atalho Ctrl+Shift+D
+  // DEV mode via URL ?dev=NATA5K
+  // ============================================
+  lockEl.style.display = 'none';
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('tv').hidden = false;
+
+  // DEV via URL: ?dev=NATA5K
+  (async () => {
+    const params = new URLSearchParams(location.search);
+    const devParam = params.get('dev');
+    if (devParam) {
+      const h = await sha256(devParam.trim().toUpperCase());
+      if (h === HASH_DEV) enableDevMode();
+    }
+  })();
+
+  // Atalho secreto pra forçar dev mode (Ctrl+Shift+D)
+  document.addEventListener('keydown', async (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'D') {
+      e.preventDefault();
+      const pwd = prompt('Senha DEV:');
+      if (!pwd) return;
+      const h = await sha256(pwd.trim().toUpperCase());
+      if (h === HASH_DEV) enableDevMode();
+      else alert('Senha incorreta');
+    }
+  });
 
   // ============================================
   // RESTO DO APP (carregado depois da senha)
@@ -178,6 +207,8 @@
   }, 3000);
 
   // ---------- Player ----------
+  const unmuteOverlay = document.getElementById('unmute-overlay');
+
   function loadCurrent(isFirst) {
     if (playlist.length === 0) {
       ltTitle.textContent = 'Nenhuma aula configurada';
@@ -193,8 +224,9 @@
     const infoTitle = document.getElementById('info-title');
     if (infoTitle) infoTitle.textContent = item.title;
 
-    // Primeiro play: sem fade pra não perder user activation
+    // Primeiro play: muted pra autoplay funcionar sem user activation
     if (isFirst) {
+      player.muted = true;
       player.src = item.file;
       player.load();
       const p = player.play();
@@ -203,6 +235,8 @@
         showPlayFallback();
       });
       showLowerThird();
+      // Mostra overlay "ativar som" se ainda muted
+      if (unmuteOverlay && player.muted) unmuteOverlay.hidden = false;
       return;
     }
 
@@ -431,9 +465,9 @@
     appendMsg(m.user, m.text);
   }
 
-  // Burst inicial: 8 mensagens em sequência rápida, ritmo crescente
+  // Burst inicial: 5 mensagens (era 8) com timing mais espaçado
   function initialBurst() {
-    const seq = [120, 280, 200, 450, 320, 620, 380, 800];
+    const seq = [400, 900, 1200, 1800, 2400];
     let acc = 0;
     seq.forEach(d => {
       acc += d;
@@ -441,13 +475,14 @@
     });
   }
 
-  // Próxima mensagem solo (pausa natural)
+  // Próxima mensagem solo — 60% mais lento que antes
+  // Era: 1.8s a 9.3s. Agora: 4.5s a 22s
   function scheduleNextFake() {
-    const delay = 1800 + Math.random() * 7500; // 1.8s a 9.3s
+    const delay = 4500 + Math.random() * 17500;
     setTimeout(() => {
       dropFakeMsg();
-      // ~12% de chance de virar burst (estilo "hype train" da Twitch)
-      if (Math.random() < 0.12) {
+      // Bursts ficaram raros (era 12%, agora 4%)
+      if (Math.random() < 0.04) {
         triggerHypeBurst();
       } else {
         scheduleNextFake();
@@ -455,28 +490,76 @@
     }, delay);
   }
 
-  // Burst de hype: 3-6 mensagens em sequência rápida
+  // Burst raro: 2-3 mensagens (era 3-6)
   function triggerHypeBurst() {
-    const count = 3 + Math.floor(Math.random() * 4);
+    const count = 2 + Math.floor(Math.random() * 2);
     let acc = 0;
     for (let i = 0; i < count; i++) {
-      acc += 200 + Math.random() * 500;
+      acc += 600 + Math.random() * 800;
       setTimeout(dropFakeMsg, acc);
     }
-    // Volta ao ritmo normal depois de pausa "respiro"
-    setTimeout(scheduleNextFake, acc + 2000 + Math.random() * 3000);
+    setTimeout(scheduleNextFake, acc + 4000 + Math.random() * 5000);
+  }
+
+  // ---------- Firebase (chat real) ----------
+  let fbDb = null;
+  let fbReady = false;
+  const fbConfig = window.FIREBASE_CONFIG;
+  if (fbConfig && typeof firebase !== 'undefined') {
+    try {
+      firebase.initializeApp(fbConfig);
+      fbDb = firebase.firestore();
+      fbReady = true;
+      // Auth anônima
+      firebase.auth().signInAnonymously().catch(err => console.warn('auth:', err));
+      // Listener: mensagens em tempo real (últimas 60)
+      const seenIds = new Set();
+      fbDb.collection('chat')
+        .orderBy('ts', 'desc')
+        .limit(60)
+        .onSnapshot(snap => {
+          // Inverte pra ordem cronológica
+          const docs = [];
+          snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+          docs.reverse();
+          docs.forEach(d => {
+            if (!seenIds.has(d.id)) {
+              seenIds.add(d.id);
+              appendMsg(d.user || 'anônimo', d.text || '', 'real');
+            }
+          });
+        }, err => console.warn('firestore:', err));
+      console.log('[chat] Firebase ativo');
+    } catch (err) {
+      console.warn('Firebase falhou, usando fake apenas:', err);
+    }
   }
 
   // Submit do chat (qualquer pessoa pode comentar)
-  chatForm.addEventListener('submit', (e) => {
+  chatForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = chatName.value.trim() || 'anônimo';
     const text = chatInput.value.trim();
     if (!text) return;
     try { localStorage.setItem('chat_name', name); } catch(e) {}
-    const isYou = DEV_MODE && name.toLowerCase() === chatName.value.toLowerCase();
-    appendMsg(name, text, DEV_MODE ? 'dev' : 'you');
     chatInput.value = '';
+
+    if (fbReady && fbDb) {
+      // Envia pro Firebase — vai aparecer pra todos via onSnapshot
+      try {
+        await fbDb.collection('chat').add({
+          user: name.slice(0, 20),
+          text: text.slice(0, 240),
+          ts: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      } catch (err) {
+        console.warn('send:', err);
+        appendMsg(name, text, DEV_MODE ? 'dev' : 'you'); // fallback local
+      }
+    } else {
+      // Sem Firebase: mostra só localmente
+      appendMsg(name, text, DEV_MODE ? 'dev' : 'you');
+    }
   });
 
   // Toggle desktop (recolher chat)
@@ -666,16 +749,47 @@
   });
 
   // ---------- Start ----------
-  startBtn.addEventListener('click', () => {
-    splash.style.display = 'none';
-    tv.hidden = false;
-    // Garante que nenhum modal/overlay esteja ativo
+  // Auto-start (sem splash) — site abre, vídeo toca muted, user clica overlay pra ativar som
+  function autoStart() {
     memberModal.hidden = true;
     if (drawer) drawer.hidden = true;
     setTimeout(() => memberTools.classList.add('show'), 1200);
-    loadCurrent(true); // primeiro play sem fade
+    loadCurrent(true);
     setupHostPip();
-  });
+  }
+
+  // Botão antigo "INICIAR TRANSMISSÃO" (caso splash apareça via fluxo legado)
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      splash.style.display = 'none';
+      tv.hidden = false;
+      autoStart();
+    });
+  }
+
+  // Inicia automaticamente
+  autoStart();
+
+  // Handler do overlay "ATIVAR SOM"
+  if (unmuteOverlay) {
+    unmuteOverlay.addEventListener('click', () => {
+      player.muted = false;
+      if (player.volume === 0) player.volume = 1;
+      const p = player.play();
+      if (p && p.catch) p.catch(()=>{});
+      unmuteOverlay.hidden = true;
+      // Atualiza UI do volume
+      try { updateVolUI(); } catch(e) {}
+    });
+  }
+
+  // ---------- WhatsApp CTA ----------
+  const wa = window.WHATSAPP || { number: "5511915618597", message: "Oi Nata!" };
+  const waUrl = `https://wa.me/${wa.number}?text=${encodeURIComponent(wa.message)}`;
+  const ctaWhats = document.getElementById('cta-whats');
+  if (ctaWhats) ctaWhats.href = waUrl;
+  const nlCtaWhats = document.getElementById('nl-cta-whats');
+  if (nlCtaWhats) nlCtaWhats.href = waUrl;
 
   // Atalhos de teclado
   document.addEventListener('keydown', (e) => {

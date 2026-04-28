@@ -9,6 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@400;600;800;900&family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
+<!-- Firebase (chat real). Carregado defer; se FIREBASE_CONFIG não existir, app.js ignora -->
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -179,25 +183,35 @@
       { user: "leo_",         text: "patty cursor é mais lento q claude code n?" },
       { user: "patty.",       text: "leo_ é mas tem suas vantagens" },
 
-      // BUENOCODE (lançamento hoje 22h)
+      // BUENOCODE (poucas, sem saturar)
       { user: "leo_",         text: "qto custa o BUENOCODE?" },
       { user: "patty.",       text: "ja to com a abinha aberta esperando 22h" },
-      { user: "fefe",         text: "BUENOCODE é a mentoria nova ne?" },
       { user: "marcos1995",   text: "to esperando o link do bueno" },
-      { user: "_duduzin",     text: "vai ter pre-venda?" },
-      { user: "anaaaa",       text: "Nata, vc ta lançando hoje msm o BUENOCODE?" },
-      { user: "vinin1",       text: "qd começa?" },
-      { user: "rafz",         text: "alguem ja sabe o valor do bueno?" },
-      { user: "GamerXX",      text: "to no aguardo do link" },
-      { user: "tiagoSilva.",  text: "hoje 22h vamo" },
-      { user: "joaoferre",    text: "vlw nata, ate 22h dnv" },
-      { user: "lu_007",       text: "Nata o bueno vai ter modulo gratis tbm?" },
-      { user: "mariazinha._.",text: "ja entrei na lista" },
-      { user: "patty.",       text: "perdi o ultimo lançamento, hj n perco" },
-      { user: "leo_",         text: "to esperando esse drop ha mts" },
-      { user: "fefe",         text: "vai ter live de venda hj?" },
-      { user: "_duduzin",     text: "alguem do bueno aqui? alguma indicação?" },
+      { user: "anaaaa",       text: "Nata, vc ta lançando hoje msm?" },
       { user: "vinin1",       text: "BUENOCODE vai ser foda" },
+
+      // marketing real (gente comentando rotina)
+      { user: "lu_007",       text: "alguem aq ta rodando facebook ads?" },
+      { user: "marcos1995",   text: "minha taxa de cliques caiu 40% essa semana" },
+      { user: "fefe",         text: "instagram ads ta caro demais ultimamente" },
+      { user: "rafz",         text: "google ads ta convertendo melhor pra mim" },
+      { user: "_duduzin",     text: "qual ferramenta de tracking vcs usam?" },
+      { user: "tiagoSilva.",  text: "to quebrando a cabeça com criativo novo" },
+      { user: "GamerXX",      text: "ja tentei zap msg e n converteu nada kkk" },
+      { user: "anaaaa",       text: "tô refazendo minha página de captura" },
+      { user: "joaoferre",    text: "ngm aqui vende info?" },
+      { user: "patty.",       text: "to pensando em parar de gastar com tráfego" },
+      { user: "vinin1",       text: "minha lista de email ta morrendo, alguem com dica?" },
+
+      // vida pessoal
+      { user: "_duduzin",     text: "ta frio aqui no sul" },
+      { user: "marcos1995",   text: "minha filha n quer dormir kkkk" },
+      { user: "fefe",         text: "café acabando" },
+      { user: "patty.",       text: "comendo pipoca aq" },
+      { user: "rafz",         text: "é dia de feira aqui hj" },
+      { user: "tiagoSilva.",  text: "to no almoço ainda" },
+      { user: "GamerXX",      text: "minha vizinha ta gritando de novo" },
+      { user: "anaaaa",       text: "esqueci o leite no fogo, ja volto" },
 
       // chegada tarde / saída
       { user: "carlinhos",    text: "cheguei atrasado" },
@@ -209,6 +223,16 @@
       { user: "tiagoSilva.",  text: "amanha sem falta" },
       { user: "marcos1995",   text: "vlw galera, ate amanha" }
     ];
+
+    // CTA WhatsApp (botões "ASSINAR" e "RESERVAR VAGA" abrem o whats)
+    window.WHATSAPP = {
+      number: "5511915618597",
+      message: "Oi Nata! Vim do AO VIVO e quero saber sobre o BUENOCODE 🚀"
+    };
+
+    // FIREBASE — preencha pra ativar chat real entre todos os usuários
+    // (instruções em CHAT-REAL-COMO-ATIVAR.txt)
+    window.FIREBASE_CONFIG = null; // ex: { apiKey:"...", projectId:"...", ... }
 
     // INSIGHTS (cards rotacionando no canto superior direito)
     window.BLACK_INSIGHTS = [
@@ -403,6 +427,13 @@
 
       <!-- Fader pra transições -->
       <div id="fader" class="fader"></div>
+
+      <!-- Overlay "ativar som" (aparece enquanto vídeo está muted) -->
+      <button id="unmute-overlay" class="unmute-overlay" hidden>
+        <div class="uo-icon">🔊</div>
+        <div class="uo-text">CLIQUE PARA ATIVAR O SOM</div>
+        <div class="uo-sub">vídeo está rodando sem áudio</div>
+      </button>
     </section>
 
     <!-- INFO BAR (estilo Twitch, abaixo do player) -->
@@ -422,7 +453,9 @@
       </div>
       <div class="info-right">
         <button class="btn-follow">+ SEGUIR</button>
-        <button class="btn-subscribe">★ ASSINAR</button>
+        <a class="btn-subscribe" id="cta-whats" href="#" target="_blank" rel="noopener">
+          <span class="btn-wa-icon">▶</span> FALAR NO WHATS
+        </a>
       </div>
     </div>
     </div><!-- /stage-area -->
@@ -502,7 +535,7 @@
         </div>
 
         <div class="nl-meta" id="nl-meta">—</div>
-        <button class="nl-cta">RESERVAR MINHA VAGA</button>
+        <a class="nl-cta" id="nl-cta-whats" href="#" target="_blank" rel="noopener">▶ GARANTIR VAGA NO WHATSAPP</a>
       </div>
 
       <!-- Arquivo / aulas antigas -->

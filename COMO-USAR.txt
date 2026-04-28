@@ -3,20 +3,24 @@ AO VIVO COM BLACK MEMBERS · COMO USAR
 ============================================
 
 ============================================
-SENHAS
+ABRIR O SITE (sem senha)
 ============================================
 
-  CALLSECRETA  →  ENTRADA NORMAL (modo público da fake-live)
-                  Vê tudo, mas os 4 botões (PAUSAR / COMENTAR
-                  / CÂMERA / MICROFONE) ficam com cadeado dourado
-                  "🔒 5K". Clicar abre modal "ACESSO RESTRITO".
+O site abre DIRETO — vídeo já tá rodando MUTED ao carregar.
+Usuário clica no overlay "▶ CLIQUE PARA ATIVAR O SOM" pra ouvir.
 
-  NATA5K       →  ENTRADA DEV (você)
-                  Mesma tela, MAS os 4 botões funcionam de verdade.
-                  Aparece um badge "● DEV MODE" no topo. F12 e
-                  botão direito voltam a funcionar.
+PARA ENTRAR EM DEV MODE (você):
+  - Opção A — URL: adicione ?dev=NATA5K no final do link
+    Ex: vinossauros-pixel.github.io/nata-black-ao-vivo/?dev=NATA5K
+    Salve esse link nos seus favoritos.
+  - Opção B — Atalho: Ctrl+Shift+D abre prompt de senha (NATA5K)
 
-  Se digitar errado, dá shake + "SENHA INCORRETA · ACESSO NEGADO".
+EM DEV MODE:
+  - Aparece badge "● DEV MODE" no topo
+  - Botão "AULAS" no header destrava
+  - 4 botões Black Member 5K destravam (PAUSAR/COMENTAR/CÂMERA/MIC)
+  - F12 e botão direito voltam a funcionar
+  - Blur dos elementos premium some
 
 ============================================
 COMO TROCAR AS AULAS

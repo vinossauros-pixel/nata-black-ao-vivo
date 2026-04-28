@@ -1,0 +1,77 @@
+============================================
+COMO ATIVAR O CHAT REAL (Firebase) — 5 minutos
+============================================
+
+Hoje o chat tem mensagens fake rotativas (parecem reais mas só você
+vê). Pra QUALQUER PESSOA que entrar no site comentar de verdade e
+todos verem em tempo real, ative o Firebase (gratuito):
+
+PASSO 1 — Criar projeto Firebase
+  1. Acesse https://console.firebase.google.com (login com sua conta Google)
+  2. Clique em "+ Adicionar projeto"
+  3. Nome: "nata-black-chat" (ou qualquer)
+  4. Pode DESLIGAR o Google Analytics (não precisa)
+  5. Aguarda criar (~30s)
+
+PASSO 2 — Habilitar Firestore
+  1. No menu lateral: Build > Firestore Database
+  2. "Criar banco de dados"
+  3. Localização: "southamerica-east1 (São Paulo)"
+  4. Modo: "Iniciar no MODO DE TESTE" (importante pra começar fácil)
+  5. "Ativar"
+
+PASSO 3 — Habilitar Auth Anônima
+  1. No menu lateral: Build > Authentication
+  2. "Começar"
+  3. Aba "Sign-in method"
+  4. Clique em "Anônimo" > Ativar > Salvar
+
+PASSO 4 — Criar Web App e copiar config
+  1. No painel principal, clique no ícone "</>" (Web App)
+  2. Apelido: "nata-tv" > Registrar app
+  3. APARECE UM BLOCO DE CÓDIGO. Copie SÓ a parte do firebaseConfig:
+
+     const firebaseConfig = {
+       apiKey: "AIza...",
+       authDomain: "...",
+       projectId: "...",
+       storageBucket: "...",
+       messagingSenderId: "...",
+       appId: "..."
+     };
+
+PASSO 5 — Colar no index.html
+  1. Abra index.html no Bloco de Notas
+  2. Procure por: window.FIREBASE_CONFIG = null;
+  3. Substitua por:
+
+     window.FIREBASE_CONFIG = {
+       apiKey: "AIza...",          // cole o seu
+       authDomain: "...",
+       projectId: "...",
+       storageBucket: "...",
+       messagingSenderId: "...",
+       appId: "..."
+     };
+
+  4. Salve
+
+PASSO 6 — Push pro GitHub Pages
+  Abra o terminal na pasta e rode:
+    git add .
+    git commit -m "ativa chat real Firebase"
+    git push
+
+  (ou me chama que eu faço)
+
+============================================
+DEPOIS DISSO:
+- Site abre, qualquer pessoa digita nome + comentário, todos veem
+- Mensagens persistem (próximas pessoas que entrarem veem o histórico)
+- Free tier do Firebase suporta milhares de mensagens/dia
+
+REGRAS DE SEGURANÇA (depois que estiver funcionando):
+- O modo "teste" do Firestore deixa qualquer um escrever por 30 dias
+- Pra produção: vá em Firestore > Regras e ajuste pra não-anônimo, etc.
+- Me chama quando chegar nessa parte
+============================================
