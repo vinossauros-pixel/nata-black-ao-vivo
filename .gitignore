@@ -1,0 +1,8 @@
+# Vídeos não vão pro GitHub (Pages limita 100MB/arquivo, 1GB total)
+videos/
+host/
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+<title>AO VIVO COM BLACK MEMBERS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========================================
+       CONFIG — edite só esta seção
+       ======================================== -->
+  <script>
+    // PLAYLIST principal (aulas em loop)
+    window.PLAYLIST = [
+      { file: "videos/ANALISE OP.mp4", title: "Análise de Operação · Aula Fechada" }
+    ];
+
+    // VÍDEO DO HOST (quadradinho do canto). "" pra desativar.
+    window.HOST_VIDEO = "host/host.mp4";
+
+    // CENSURA — pula trechos. Tempo em segundos.
+    // Ex: para censurar do 6m20s ao 6m25s -> { from: 380, to: 385 }
+    window.CENSORED_RANGES = [
+      // { from: 0, to: 0 }
+    ];
+
+    // TICKER (faixa rolando no rodapé)
+    window.TICKER_MESSAGES = [
+      "TRANSMISSÃO EXCLUSIVA · APENAS BLACK MEMBERS · VOCÊ ESTÁ ENTRE OS POUCOS",
+      "ESTA AULA NÃO EXISTE EM LUGAR NENHUM · SÓ AQUI · CIRCULAÇÃO RESTRITA",
+      "EM BREVE · MENTORIA CLAUDE CODE COM A NATA · VAGAS ULTRA LIMITADAS",
+      "GRAVAÇÃO INTERNA · NÃO REPLICÁVEL · NÃO REPRODUZÍVEL · NDA INFORMAL",
+      "ENQUANTO O MERCADO COPIA O ÓBVIO · A NATA CONSTRÓI O QUE NINGUÉM VÊ",
+      "SE VOCÊ NÃO ESTAVA NA SALA · VOCÊ NÃO TEM · NUNCA REABRIMOS",
+      "CLAUDE CODE É O NOVO PETRÓLEO · QUEM DOMINA AGORA, COLHE POR DÉCADAS",
+      "MATERIAL FECHADO · USO INTERNO · O QUE É DITO AQUI FICA AQUI",
+      "MENTORIA CLAUDE CODE · VOCÊ NÃO VAI APRENDER A USAR · VAI APRENDER A DOMINAR",
+      "ACESSO DIRETO À NATA · AO CÍRCULO INTERNO · À OPERAÇÃO QUE GERA",
+      "BLACK MEMBERS · TOP 1% · ELITE OPERACIONAL · NÍVEL ACIMA",
+      "AULAS QUE O MERCADO NÃO VAI TER ACESSO · POR DESIGN · POR ESCOLHA"
+    ];
+
+    // PRÓXIMA AULA GRÁTIS (countdown)
+    window.NEXT_FREE_LESSON = {
+      datetime: "2026-04-29T22:00:00", // amanhã 22h (formato ISO local)
+      title: "AULA GRÁTIS · ABERTA AO PÚBLICO",
+      teaser: "O ÚNICO MOVIMENTO QUE A NATA ENSINA DE GRAÇA · NÃO REPETIMOS"
+    };
+
+    // BIBLIOTECA DE AULAS (drawer lateral)
+    // Status: "free" (todos veem) | "locked" (só Black Member) | "next" (próxima)
+    window.LESSONS_LIBRARY = [
+      { num: "07", title: "O ERRO QUE CUSTOU R$ 87K EM 11 DIAS", date: "26.04.2026", status: "locked", teaser: "Falha técnica que ninguém comenta — destrói operações em silêncio." },
+      { num: "06", title: "VAZAMENTO INTERNO · MÉTODO RETIRADO DO AR", date: "22.04.2026", status: "locked", teaser: "Conteúdo que foi removido do canal oficial. Só nos arquivos." },
+      { num: "05", title: "POR QUE 90% TRAVA NOS R$ 10K", date: "18.04.2026", status: "locked", teaser: "O teto invisível e o que separa quem fura dele." },
+      { num: "04", title: "ANÁLISE DE OPERAÇÃO · BASTIDORES", date: "14.04.2026", status: "free", teaser: "Diagnóstico ao vivo de uma estrutura real. Sem filtro." },
+      { num: "03", title: "COPY QUE A NATA NÃO ENSINA EM PÚBLICO", date: "10.04.2026", status: "locked", teaser: "Estrutura interna de copy. Cópia direta dos templates do círculo." },
+      { num: "02", title: "O MOVIMENTO QUE NINGUÉM TÁ FAZENDO", date: "06.04.2026", status: "locked", teaser: "Vantagem assimétrica enquanto a janela está aberta." },
+      { num: "01", title: "BEM-VINDO À NATA BLACK · LEIA ANTES", date: "01.04.2026", status: "free", teaser: "As 3 regras não-negociáveis de quem entra." }
+    ];
+
+    // CHAT FAKE (mensagens rotativas que entram no chat lateral)
+    window.FAKE_CHAT = [
+      { user: "lucas.bm", text: "tô assistindo do trampo hahaha" },
+      { user: "rafa_", text: "essa parte agora me destruiu" },
+      { user: "marina.s", text: "Nataaaaaa 🔥" },
+      { user: "joao.cdz", text: "qual o site q tu falou?" },
+      { user: "biel.07", text: "salvando esse trecho" },
+      { user: "ana.cmp", text: "porra Nata, isso muda tudo" },
+      { user: "diego.m", text: "tô anotando aqui" },
+      { user: "vini.97", text: "Já passei pelo que ele tá descrevendo agora" },
+      { user: "renata_b", text: "manda no zap depois Nata 🙏" },
+      { user: "thiago.f", text: "MEU DEUS" },
+      { user: "carol.dz", text: "vou marcar agenda pra amanhã 22h" },
+      { user: "pedro_4k", text: "essa galera não tem noção do que é isso aqui" },
+      { user: "bruno.rmt", text: "primeira vez aqui, tô chocado" },
+      { user: "lais.brt", text: "amanhã 22h tô aqui" },
+      { user: "felipe_n", text: "REPLAY DESSA AULA POR FAVOR" },
+      { user: "amanda.x", text: "Nata, manda essa aula no privado por favor" },
+      { user: "rod_dev", text: "explicação SURREAL" },
+      { user: "isa.m", text: "tô gravando a tela hahaha" },
+      { user: "lucas.bm", text: "uma pergunta — onde acho o material?" },
+      { user: "matheus.7", text: "Nata, vc é foda" },
+      { user: "jp.santos", text: "to copiando isso pro meu projeto AGORA" },
+      { user: "nina.r", text: "primeira aula que assisto até o fim em meses" },
+      { user: "thiago.f", text: "calma calma calma" },
+      { user: "guilherme_v", text: "isso aqui não é normal kkk" },
+      { user: "paty.cd", text: "✍️" },
+      { user: "rafa_", text: "amanhã tem mais?" },
+      { user: "leonardo.x", text: "minha cabeça explodiu" },
+      { user: "carol.dz", text: "TÔ MUITO LIGADA" }
+    ];
+
+    // BLACK INSIGHTS (cards rotacionando no canto superior direito)
+    window.BLACK_INSIGHTS = [
+      { tag: "BLACK INSIGHT", text: "A NATA NÃO ENSINA O ÓBVIO." },
+      { tag: "AULA FECHADA",  text: "ISTO NÃO ESTÁ EM LUGAR NENHUM ALÉM DAQUI." },
+      { tag: "EM BREVE",      text: "MENTORIA CLAUDE CODE · COM A NATA · VAGAS LIMITADAS" },
+      { tag: "BLACK INSIGHT", text: "VOCÊ NÃO PAGOU PELO CONTEÚDO. VOCÊ PAGOU PELA TRIBO." },
+      { tag: "ESCASSEZ",      text: "NUNCA REABRIMOS A MESMA TURMA." },
+      { tag: "BLACK INSIGHT", text: "INFORMAÇÃO ASSIMÉTRICA = LUCRO ASSIMÉTRICO." },
+      { tag: "SEGREDO",       text: "O QUE É DITO AQUI · FICA AQUI." },
+      { tag: "BLACK INSIGHT", text: "ENQUANTO ELES ASSISTEM REELS · VOCÊ ESTÁ AQUI." },
+      { tag: "BLACK CODE",    text: "VANTAGEM INJUSTA. POR DESIGN." },
+      { tag: "AULA FECHADA",  text: "GRAVAÇÃO INTERNA · NÃO REPLICÁVEL." },
+      { tag: "BLACK INSIGHT", text: "QUEM TEM PRESSA COPIA. QUEM TEM PACIÊNCIA DOMINA." },
+      { tag: "EM BREVE",      text: "CLAUDE CODE NÃO É FERRAMENTA. É ALAVANCA." },
+      { tag: "BLACK INSIGHT", text: "BLACK MEMBERS NÃO COMPETEM. ELES ESCOLHEM." },
+      { tag: "ESCASSEZ",      text: "SE VOCÊ NÃO ESTAVA NA SALA · VOCÊ NÃO TEM." }
+    ];
+  </script>
+
+  <!-- ========================================
+       TELA DE SENHA
+       ======================================== -->
+  <div id="lock">
+    <div class="lock-inner">
+      <div class="lock-logo">
+        <span class="lock-line-1">AO VIVO COM</span>
+        <span class="lock-line-2">BLACK MEMBERS</span>
+      </div>
+      <div class="lock-tagline">ACESSO RESTRITO · CIRCULAÇÃO INTERNA</div>
+      <form id="lock-form" autocomplete="off">
+        <input id="lock-input" type="password" placeholder="DIGITE SUA SENHA" autocomplete="off" spellcheck="false" />
+        <button type="submit">DESBLOQUEAR</button>
+      </form>
+      <div id="lock-error" class="lock-error" hidden>SENHA INCORRETA · ACESSO NEGADO</div>
+      <div class="lock-hint">VOCÊ ESTÁ EM ÁREA RESTRITA. SAIA SE NÃO TIVER AUTORIZAÇÃO.</div>
+    </div>
+    <div class="lock-vignette"></div>
+  </div>
+
+  <!-- ========================================
+       SPLASH
+       ======================================== -->
+  <div id="splash" hidden>
+    <div class="splash-inner">
+      <div class="splash-eyebrow">VOCÊ ESTÁ ENTRE OS POUCOS</div>
+      <div class="splash-logo">
+        <span class="splash-line-1">AO VIVO COM</span>
+        <span class="splash-line-2">BLACK MEMBERS</span>
+      </div>
+      <div class="splash-tagline">CANAL EXCLUSIVO · NATA BLACK · TRANSMISSÃO 24/7</div>
+      <button id="splash-start">▶  INICIAR TRANSMISSÃO</button>
+      <div class="splash-hint">Pressione <strong>F11</strong> depois de iniciar para tela cheia</div>
+    </div>
+    <div class="splash-vignette"></div>
+  </div>
+
+  <!-- ========================================
+       INTERFACE DA TV
+       ======================================== -->
+  <main id="tv" hidden>
+
+    <header class="bar bar-top">
+      <div class="brand">
+        <span class="brand-mark">●</span>
+        <div class="brand-text">
+          <span class="brand-line-1">AO VIVO COM</span>
+          <span class="brand-line-2">BLACK MEMBERS</span>
+        </div>
+      </div>
+
+      <div class="live-cluster">
+        <div class="online">
+          <span class="online-dot"></span>
+          <span><strong id="online-count">—</strong> PESSOAS ASSISTINDO</span>
+        </div>
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          <span class="live-text">AO VIVO</span>
+        </div>
+      </div>
+
+      <div class="meta">
+        <button id="lessons-btn" class="lessons-btn dev-only">
+          <span class="lb-icon">📚</span>
+          <span class="lb-text">AULAS</span>
+        </button>
+        <div class="meta-time">
+          <div id="clock" class="clock">--:--:--</div>
+          <div class="date" id="date">—</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="middle">
+    <section class="stage">
+      <video id="player" playsinline></video>
+      <div class="stage-vignette"></div>
+
+      <!-- Black Insight (canto superior direito) -->
+      <div id="insight" class="insight">
+        <div class="insight-tag" id="insight-tag">BLACK INSIGHT</div>
+        <div class="insight-text" id="insight-text">—</div>
+      </div>
+
+      <!-- Quadradinho do HOST -->
+      <div id="host-pip" class="host-pip" hidden>
+        <div class="host-frame">
+          <video id="host-video" muted loop playsinline></video>
+          <div class="host-overlay">
+            <span class="host-dot"></span>
+            <span class="host-label">HOST · AO VIVO</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lower-third -->
+      <div id="lower-third" class="lower-third">
+        <div class="lt-tag">AGORA</div>
+        <div class="lt-title" id="lt-title">—</div>
+      </div>
+
+      <!-- Marca d'água -->
+      <div class="watermark">
+        <span class="wm-dot"></span> NATA BLACK · BLACK MEMBERS ONLY
+      </div>
+
+      <!-- Controle de volume -->
+      <div class="vol-ctrl" id="vol-ctrl">
+        <button class="vol-btn vol-icon-btn" id="vol-mute" title="Mudo">
+          <span id="vol-icon">🔊</span>
+        </button>
+        <button class="vol-btn" id="vol-down" title="Abaixar">−</button>
+        <div class="vol-bar">
+          <div class="vol-fill" id="vol-fill"></div>
+        </div>
+        <button class="vol-btn" id="vol-up" title="Aumentar">+</button>
+        <div class="vol-pct" id="vol-pct">100%</div>
+      </div>
+
+      <!-- Botões Black Member 5K (só DEV vê) -->
+      <div class="member-tools dev-only">
+        <button class="mt-btn" data-action="pause" data-locked="true">
+          <span class="mt-icon">⏸</span>
+          <span class="mt-text">PAUSAR</span>
+          <span class="mt-lock">🔒 5K</span>
+        </button>
+        <button class="mt-btn" data-action="comment" data-locked="true">
+          <span class="mt-icon">💬</span>
+          <span class="mt-text">COMENTAR</span>
+          <span class="mt-lock">🔒 5K</span>
+        </button>
+        <button class="mt-btn" data-action="camera" data-locked="true">
+          <span class="mt-icon">📹</span>
+          <span class="mt-text">CÂMERA</span>
+          <span class="mt-lock">🔒 5K</span>
+        </button>
+        <button class="mt-btn" data-action="mic" data-locked="true">
+          <span class="mt-icon">🎙</span>
+          <span class="mt-text">MICROFONE</span>
+          <span class="mt-lock">🔒 5K</span>
+        </button>
+      </div>
+
+      <!-- Modal de bloqueio Black Member -->
+      <div id="member-modal" class="member-modal" hidden>
+        <div class="mm-card">
+          <div class="mm-tag">ACESSO RESTRITO</div>
+          <div class="mm-title">FUNÇÃO EXCLUSIVA<br/>BLACK MEMBER 5K</div>
+          <div class="mm-text">Esta interação é liberada apenas para membros do tier <strong>BLACK 5K</strong>.<br/>Você está assistindo no nível público.</div>
+          <button id="mm-close">FECHAR</button>
+        </div>
+      </div>
+
+      <!-- Comment box (só dev) -->
+      <div id="comment-box" class="comment-box" hidden>
+        <input id="comment-input" type="text" placeholder="Comentar como NATA · BLACK 5K..." />
+      </div>
+
+      <!-- Comentário aparecendo na tela -->
+      <div id="comment-display" class="comment-display" hidden>
+        <div class="cd-author">NATA · BLACK 5K</div>
+        <div class="cd-text" id="cd-text">—</div>
+      </div>
+
+      <!-- Câmera/mic preview pro dev -->
+      <div id="dev-cam" class="dev-cam" hidden>
+        <video id="dev-cam-video" autoplay muted playsinline></video>
+        <div class="dev-cam-label">VOCÊ · DEV</div>
+      </div>
+
+      <!-- Fader pra transições -->
+      <div id="fader" class="fader"></div>
+    </section>
+
+    <!-- CHAT lateral (qualquer um que entra pode comentar) -->
+    <aside class="chat" id="chat">
+      <div class="chat-head">
+        <span class="chat-dot"></span>
+        <span class="chat-title">CHAT AO VIVO</span>
+        <span class="chat-count" id="chat-count">—</span>
+        <button class="chat-toggle" id="chat-toggle" title="Recolher">▸</button>
+      </div>
+      <div class="chat-body" id="chat-body"></div>
+      <form class="chat-form" id="chat-form" autocomplete="off">
+        <input id="chat-name" type="text" placeholder="seu nome" maxlength="20" autocomplete="off" />
+        <input id="chat-input" type="text" placeholder="comentar..." maxlength="240" autocomplete="off" />
+        <button type="submit">▶</button>
+      </form>
+    </aside>
+
+    </div><!-- /middle -->
+
+    <footer class="bar bar-bottom">
+      <div class="next">
+        <span class="next-label">EM SEGUIDA</span>
+        <span class="next-title" id="next-title">—</span>
+      </div>
+
+      <div class="ticker">
+        <div class="ticker-track" id="ticker-track">—</div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ========================================
+       DRAWER: AULAS DA NATA
+       ======================================== -->
+  <aside id="lessons-drawer" class="lessons-drawer" hidden>
+    <div class="ld-overlay"></div>
+    <div class="ld-panel">
+      <button id="ld-close" class="ld-close">✕</button>
+
+      <div class="ld-header">
+        <div class="ld-tag">BIBLIOTECA EXCLUSIVA · ACESSO INTERNO</div>
+        <h2 class="ld-title">AULAS DA NATA</h2>
+        <div class="ld-sub">CIRCULAÇÃO RESTRITA · BLACK MEMBERS</div>
+      </div>
+
+      <!-- Próxima aula grátis -->
+      <div class="next-lesson">
+        <div class="nl-glow"></div>
+        <div class="nl-tag">PRÓXIMA AULA · ABERTA AO PÚBLICO</div>
+        <div class="nl-title" id="nl-title">—</div>
+        <div class="nl-teaser" id="nl-teaser">—</div>
+
+        <div class="nl-countdown-wrap">
+          <div class="nl-cd-block">
+            <div class="nl-cd-num" id="cd-d">--</div>
+            <div class="nl-cd-lbl">DIAS</div>
+          </div>
+          <div class="nl-cd-sep">:</div>
+          <div class="nl-cd-block">
+            <div class="nl-cd-num" id="cd-h">--</div>
+            <div class="nl-cd-lbl">HORAS</div>
+          </div>
+          <div class="nl-cd-sep">:</div>
+          <div class="nl-cd-block">
+            <div class="nl-cd-num" id="cd-m">--</div>
+            <div class="nl-cd-lbl">MIN</div>
+          </div>
+          <div class="nl-cd-sep">:</div>
+          <div class="nl-cd-block">
+            <div class="nl-cd-num" id="cd-s">--</div>
+            <div class="nl-cd-lbl">SEG</div>
+          </div>
+        </div>
+
+        <div class="nl-meta" id="nl-meta">—</div>
+        <button class="nl-cta">RESERVAR MINHA VAGA</button>
+      </div>
+
+      <!-- Arquivo / aulas antigas -->
+      <div class="ld-section-title">
+        <span class="lst-line"></span>
+        <span class="lst-text">ARQUIVO · GRAVAÇÕES INTERNAS</span>
+        <span class="lst-line"></span>
+      </div>
+
+      <div class="ld-grid" id="lessons-grid"></div>
+
+      <div class="ld-footer-note">
+        ARQUIVO ATUALIZADO SEMANALMENTE · APENAS BLACK MEMBERS · USO INTERNO
+      </div>
+    </div>
+  </aside>
+
+  <!-- Badge de modo dev -->
+  <div id="dev-badge" class="dev-badge" hidden>● DEV MODE</div>
+
+  <script src="app.js"></script>
+</body>
+</html>

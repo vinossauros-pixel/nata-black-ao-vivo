@@ -1,0 +1,129 @@
+============================================
+AO VIVO COM BLACK MEMBERS · COMO USAR
+============================================
+
+============================================
+SENHAS
+============================================
+
+  CALLSECRETA  →  ENTRADA NORMAL (modo público da fake-live)
+                  Vê tudo, mas os 4 botões (PAUSAR / COMENTAR
+                  / CÂMERA / MICROFONE) ficam com cadeado dourado
+                  "🔒 5K". Clicar abre modal "ACESSO RESTRITO".
+
+  NATA5K       →  ENTRADA DEV (você)
+                  Mesma tela, MAS os 4 botões funcionam de verdade.
+                  Aparece um badge "● DEV MODE" no topo. F12 e
+                  botão direito voltam a funcionar.
+
+  Se digitar errado, dá shake + "SENHA INCORRETA · ACESSO NEGADO".
+
+============================================
+COMO TROCAR AS AULAS
+============================================
+
+1) Coloque os .mp4 na pasta:
+     C:\Users\Admin\Desktop\NATA-BLACK-AO-VIVO\videos\
+
+2) Abra "index.html" no Bloco de Notas e edite:
+     window.PLAYLIST = [
+       { file: "videos/NOME-DO-ARQUIVO.mp4", title: "Nome da Aula" },
+       ...
+     ];
+
+============================================
+COMO COLOCAR SEU VÍDEO NO QUADRADINHO (HOST)
+============================================
+
+1) Coloque o seu vídeo na pasta:
+     C:\Users\Admin\Desktop\NATA-BLACK-AO-VIVO\host\
+   E renomeie pra "host.mp4"
+
+2) Pronto — a tela detecta sozinha. Se o arquivo não existir, o
+   quadradinho fica oculto. O som dele fica MUTADO (você fala pelo
+   Discord, não pelo vídeo).
+
+3) Pra mudar o nome do arquivo, edite em "index.html":
+     window.HOST_VIDEO = "host/seu-arquivo.mp4";
+
+============================================
+CENSURAR TRECHOS DO VÍDEO (ex: "agora são 19h")
+============================================
+
+A página pode pular trechos automaticamente. Você só diz qual
+segundo começa e qual segundo termina o trecho a censurar.
+
+1) Assista o vídeo e anote: ex. o trecho a cortar começa em
+   3min20s e termina em 3min26s.
+2) Converte pra segundos: 3*60+20 = 200 / 3*60+26 = 206
+3) Em "index.html" edite:
+     window.CENSORED_RANGES = [
+       { from: 200, to: 206 }
+     ];
+4) Pode adicionar quantos trechos quiser, um por linha.
+
+O pulo é invisível (~50ms) — fica natural se cortar entre frases.
+
+============================================
+EDITAR MENSAGENS (TICKER + BLACK INSIGHTS)
+============================================
+
+  window.TICKER_MESSAGES   →  faixa rolando no rodapé
+  window.BLACK_INSIGHTS    →  cards rotacionando no canto sup. direito
+
+Tudo no topo do "index.html". Edita e salva.
+
+============================================
+ATALHOS (no DEV MODE)
+============================================
+
+  L           reexibe a faixa "AGORA: nome da aula"
+  I           dispara um Black Insight no canto
+  ESPAÇO      pula pra próxima aula  (apenas em modo público)
+  F11         tela cheia / sair
+
+  Botões na barra inferior (em DEV):
+    PAUSAR     pausa/continua o vídeo principal
+    COMENTAR   abre input pra você "comentar" como NATA · BLACK 5K
+    CÂMERA     abre sua webcam num quadradinho lateral
+    MICROFONE  ativa captura de microfone (botão fica vermelho)
+
+============================================
+COMO TRANSMITIR NO DISCORD SEM VOCÊ ESCUTAR
+============================================
+
+Você precisa do VB-CABLE (gratuito).
+
+1) Instala: https://vb-audio.com/Cable/
+   - Baixar > Extrair > Botão direito em "VBCABLE_Setup_x64.exe"
+   - "Executar como administrador" > Reiniciar PC
+
+2) Configurar o som do navegador:
+   - Win + I > Sistema > Som > "Mixer de volume"
+   - Achar o navegador na lista (Chrome / Edge / Firefox)
+   - Em "Dispositivo de saída", escolher:
+     "CABLE Input (VB-Audio Virtual Cable)"
+   - Pronto: o vídeo toca, mas VOCÊ não ouve.
+
+3) No Discord:
+   - Entrar num canal de voz
+   - Clicar em "Compartilhar Tela"
+   - Escolher a JANELA do navegador (não a tela inteira)
+   - DEIXAR LIGADO o switch "Compartilhar áudio" / "Som"
+   - Iniciar transmissão
+   - A galera ouve o som da aula. Você não ouve.
+   - Você continua ouvindo o chat de voz nos seus fones.
+
+PRA VOLTAR AO NORMAL:
+   Mixer de volume > navegador > saída pra "Padrão"
+
+============================================
+DICAS
+============================================
+
+- Antes de transmitir pra galera, teste num servidor vazio.
+- Se o navegador não aparecer no Mixer, dá play num vídeo
+  qualquer pra ele aparecer.
+- A página tem proteção contra cópia básica (F12 e botão direito
+  bloqueados pra usuário comum). Se quiser hospedar online um dia
+  e proteger a sério, peça pra adicionar criptografia real.
