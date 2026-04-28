@@ -7,7 +7,7 @@
 <title>AO VIVO COM BLACK MEMBERS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@400;600;800;900&family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -191,6 +191,7 @@
     </header>
 
     <div class="middle">
+    <div class="stage-area">
     <section class="stage">
       <video id="player" playsinline></video>
       <div class="stage-vignette"></div>
@@ -290,6 +291,28 @@
       <!-- Fader pra transições -->
       <div id="fader" class="fader"></div>
     </section>
+
+    <!-- INFO BAR (estilo Twitch, abaixo do player) -->
+    <div class="info-bar">
+      <div class="info-left">
+        <div class="info-avatar">N</div>
+        <div class="info-meta">
+          <h2 class="info-title" id="info-title">—</h2>
+          <div class="info-channel">NATA BLACK · DETONADO</div>
+          <div class="info-tags">
+            <span class="tag">aula fechada</span>
+            <span class="tag">black members</span>
+            <span class="tag">claude code</span>
+            <span class="tag">nata</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-right">
+        <button class="btn-follow">+ SEGUIR</button>
+        <button class="btn-subscribe">★ ASSINAR</button>
+      </div>
+    </div>
+    </div><!-- /stage-area -->
 
     <!-- CHAT lateral (qualquer um que entra pode comentar) -->
     <aside class="chat" id="chat">

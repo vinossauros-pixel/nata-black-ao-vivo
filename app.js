@@ -190,6 +190,8 @@
 
     ltTitle.textContent = item.title;
     nextTitle.textContent = next.title;
+    const infoTitle = document.getElementById('info-title');
+    if (infoTitle) infoTitle.textContent = item.title;
 
     // Primeiro play: sem fade pra não perder user activation
     if (isFirst) {
