@@ -1056,7 +1056,7 @@ body:not(.dev-mode) .dev-only:hover {
 }
 @keyframes pulseScale {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.07); }
 }
 
 /* ============================================
@@ -1153,7 +1153,7 @@ body:not(.dev-mode) .dev-only:hover {
 .chat-text { color: rgba(245, 236, 217, 0.95); }
 
 @keyframes chatIn {
-  from { opacity: 0; transform: translateX(20px); }
+  from { opacity: 0; transform: translateX(13px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
@@ -1272,11 +1272,11 @@ body:not(.dev-mode) .dev-only:hover {
    ============================================ */
 @keyframes pulse-red {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
+  50% { opacity: 0.67; transform: scale(0.92); }
 }
 @keyframes pulse-neon {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  50% { opacity: 0.67; }
 }
 @keyframes ticker-scroll {
   0% { transform: translateX(100vw); }
@@ -1284,39 +1284,39 @@ body:not(.dev-mode) .dev-only:hover {
 }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(13px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-100%); }
+  from { opacity: 0; transform: translateY(-67%); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(100%); }
+  from { opacity: 0; transform: translateY(67%); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateY(-50%) translateX(40px); }
+  from { opacity: 0; transform: translateY(-50%) translateX(27px); }
   to { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.85); }
+  from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
 @keyframes logoEntry {
-  from { opacity: 0; transform: translateY(40px) skewY(-1deg); letter-spacing: 20px; }
+  from { opacity: 0; transform: translateY(27px) skewY(-1deg); letter-spacing: 13px; }
   to { opacity: 1; transform: translateY(0) skewY(-1deg); }
 }
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-8px); }
-  40% { transform: translateX(8px); }
-  60% { transform: translateX(-6px); }
-  80% { transform: translateX(6px); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
 }
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 60px rgba(255, 87, 34, 0.3); }
-  50% { box-shadow: 0 0 100px rgba(255, 87, 34, 0.6); }
+  0%, 100% { box-shadow: 0 0 40px rgba(255, 87, 34, 0.2); }
+  50% { box-shadow: 0 0 67px rgba(255, 87, 34, 0.4); }
 }
 
 /* ============================================
