@@ -316,10 +316,21 @@
   // ---------- Host PIP ----------
   function setupHostPip() {
     if (!hostVideoSrc) return;
+    hostVideo.muted = true;
+    hostVideo.volume = 0;
     hostVideo.src = hostVideoSrc;
     hostVideo.addEventListener('loadeddata', () => {
+      hostVideo.muted = true;
+      hostVideo.volume = 0;
       hostPip.hidden = false;
       hostVideo.play().catch(() => {});
+    });
+    // Garante que sempre fique muted (caso algo tente desmutar)
+    hostVideo.addEventListener('volumechange', () => {
+      if (!hostVideo.muted || hostVideo.volume > 0) {
+        hostVideo.muted = true;
+        hostVideo.volume = 0;
+      }
     });
     hostVideo.addEventListener('error', () => {
       // Se não existir o arquivo, esconde silenciosamente
