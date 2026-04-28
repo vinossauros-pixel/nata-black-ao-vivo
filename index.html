@@ -66,35 +66,104 @@
     ];
 
     // CHAT FAKE (mensagens rotativas que entram no chat lateral)
+    // Tons mesclados: reação, dúvida, presença, hype, técnico, agradecimento
     window.FAKE_CHAT = [
-      { user: "lucas.bm", text: "tô assistindo do trampo hahaha" },
-      { user: "rafa_", text: "essa parte agora me destruiu" },
-      { user: "marina.s", text: "Nataaaaaa 🔥" },
-      { user: "joao.cdz", text: "qual o site q tu falou?" },
-      { user: "biel.07", text: "salvando esse trecho" },
-      { user: "ana.cmp", text: "porra Nata, isso muda tudo" },
-      { user: "diego.m", text: "tô anotando aqui" },
-      { user: "vini.97", text: "Já passei pelo que ele tá descrevendo agora" },
-      { user: "renata_b", text: "manda no zap depois Nata 🙏" },
-      { user: "thiago.f", text: "MEU DEUS" },
-      { user: "carol.dz", text: "vou marcar agenda pra amanhã 22h" },
-      { user: "pedro_4k", text: "essa galera não tem noção do que é isso aqui" },
-      { user: "bruno.rmt", text: "primeira vez aqui, tô chocado" },
-      { user: "lais.brt", text: "amanhã 22h tô aqui" },
-      { user: "felipe_n", text: "REPLAY DESSA AULA POR FAVOR" },
-      { user: "amanda.x", text: "Nata, manda essa aula no privado por favor" },
-      { user: "rod_dev", text: "explicação SURREAL" },
-      { user: "isa.m", text: "tô gravando a tela hahaha" },
-      { user: "lucas.bm", text: "uma pergunta — onde acho o material?" },
-      { user: "matheus.7", text: "Nata, vc é foda" },
-      { user: "jp.santos", text: "to copiando isso pro meu projeto AGORA" },
-      { user: "nina.r", text: "primeira aula que assisto até o fim em meses" },
-      { user: "thiago.f", text: "calma calma calma" },
-      { user: "guilherme_v", text: "isso aqui não é normal kkk" },
-      { user: "paty.cd", text: "✍️" },
-      { user: "rafa_", text: "amanhã tem mais?" },
-      { user: "leonardo.x", text: "minha cabeça explodiu" },
-      { user: "carol.dz", text: "TÔ MUITO LIGADA" }
+      // -------- chegada / presença --------
+      { user: "lucas.bm",     text: "cheguei agora, perdi muito?" },
+      { user: "renata_b",     text: "boa noite galera" },
+      { user: "vitor.ds",     text: "alguém pode me dar um TLDR?" },
+      { user: "biel.07",      text: "primeira vez aqui, indicado pelo @diego.m" },
+      { user: "ana.cmp",      text: "tô do trabalho 👀" },
+      { user: "marina.s",     text: "mãe tá dormindo, fone no ouvido kkkk" },
+      { user: "carol.dz",     text: "to do banheiro pra não perder" },
+      { user: "rod_dev",      text: "consegui sair mais cedo só pra essa" },
+
+      // -------- reação ao que rolou --------
+      { user: "thiago.f",     text: "espera, repete isso de novo" },
+      { user: "rafa_",        text: "essa parte agora me DESTRUIU" },
+      { user: "matheus.7",    text: "porra. porra. porra." },
+      { user: "ana.cmp",      text: "isso explica TUDO que eu tava errando" },
+      { user: "leonardo.x",   text: "minha cabeça acabou de explodir" },
+      { user: "felipe_n",     text: "anotando no caderno físico mesmo" },
+      { user: "isa.m",        text: "tô passando isso pro meu sócio agora" },
+      { user: "nina.r",       text: "MEU DEUS isso é exatamente meu cenário" },
+      { user: "jp.santos",    text: "to copiando isso pro meu projeto AGORA" },
+      { user: "diego.m",      text: "isso vale o ano inteiro de mentoria" },
+      { user: "pedro_4k",     text: "essa galera aqui não tem noção do que é isso" },
+      { user: "guilherme_v",  text: "isso não é normal hahaha" },
+      { user: "paty.cd",      text: "✍️✍️✍️" },
+      { user: "thiago.f",     text: "CALMA CALMA CALMA" },
+      { user: "amanda.x",     text: "to com a boca aberta" },
+
+      // -------- dúvidas / perguntas --------
+      { user: "lucas.bm",     text: "qual ferramenta vc usou ali Nata?" },
+      { user: "vitor.ds",     text: "isso funciona pra info também ou só físico?" },
+      { user: "rafa_",        text: "manda a planilha 🙏" },
+      { user: "renata_b",     text: "tem material complementar dessa parte?" },
+      { user: "biel.07",      text: "como aplica isso quem tá começando?" },
+      { user: "carol.dz",     text: "essa estrutura serve pra alto ticket?" },
+      { user: "marina.s",     text: "Nata, e quando o lead trava no funil 4?" },
+      { user: "jp.santos",    text: "qual o limite mínimo pra valer a pena?" },
+      { user: "rod_dev",      text: "dá pra usar Claude pra isso?" },
+      { user: "nina.r",       text: "como vc mede o resultado disso?" },
+      { user: "felipe_n",     text: "tem um vídeo que aprofunda só isso?" },
+
+      // -------- história curta / contexto --------
+      { user: "diego.m",      text: "fiz isso semana passada e dobrou minha conversão" },
+      { user: "ana.cmp",      text: "perdi 47k ano passado por exatamente esse erro" },
+      { user: "pedro_4k",     text: "tava travado em 8k há 3 meses, isso destrava 100%" },
+      { user: "lais.brt",     text: "implementei outro dia, fechei 3 vendas em 2 dias" },
+      { user: "matheus.7",    text: "isso aqui é o que eu tava procurando há meses" },
+      { user: "vini.97",      text: "passei pelo MESMO cenário que ele tá descrevendo" },
+      { user: "bruno.rmt",    text: "trabalho com isso há 4 anos e nunca vi explicado assim" },
+
+      // -------- hype / caps --------
+      { user: "thiago.f",     text: "NATAAAAAAA 🔥🔥🔥" },
+      { user: "carol.dz",     text: "TO MUITO LIGADA AGORA" },
+      { user: "rafa_",        text: "ISSO É OURO" },
+      { user: "felipe_n",     text: "REPLAY DESSA AULA POR FAVOR" },
+      { user: "amanda.x",     text: "Nata, manda essa aula no privado pelamor" },
+      { user: "jp.santos",    text: "EU PAGARIA 5K SÓ POR ESSA AULA" },
+      { user: "leonardo.x",   text: "essa é a melhor aula do ano fácil" },
+
+      // -------- mentoria / Claude Code --------
+      { user: "diego.m",      text: "quando abre a mentoria Claude Code?" },
+      { user: "rod_dev",      text: "+1 na lista da mentoria já" },
+      { user: "isa.m",        text: "to aguardando essa mentoria há semanas" },
+      { user: "biel.07",      text: "vai ter pré-venda pros black?" },
+      { user: "nina.r",       text: "vou comprar a mentoria com certeza" },
+      { user: "vitor.ds",     text: "claude code mudou minha vida em 30 dias" },
+      { user: "matheus.7",    text: "preciso entrar nessa mentoria, sério" },
+
+      // -------- presença na próxima --------
+      { user: "carol.dz",     text: "amanhã 22h tô on" },
+      { user: "lucas.bm",     text: "vou marcar minha agenda agora" },
+      { user: "marina.s",     text: "amanhã me lembra galera" },
+      { user: "pedro_4k",     text: "se eu não tiver aqui amanhã, podem me xingar" },
+      { user: "lais.brt",     text: "amanhã levo o time inteiro" },
+      { user: "rafa_",        text: "amanhã 22h é onde eu vou estar" },
+
+      // -------- agradecimento --------
+      { user: "ana.cmp",      text: "obrigada Nata, de verdade" },
+      { user: "renata_b",     text: "valeu demais por compartilhar isso" },
+      { user: "guilherme_v",  text: "Nata, tu é foda. Sem mais." },
+      { user: "felipe_n",     text: "obrigado por não cobrar essa aqui" },
+      { user: "isa.m",        text: "essa galera não sabe a sorte que tem" },
+
+      // -------- conversa entre eles --------
+      { user: "lucas.bm",     text: "@diego.m vc também tava na turma 02?" },
+      { user: "diego.m",      text: "@lucas.bm tava sim mano, lembra do projeto X?" },
+      { user: "marina.s",     text: "@biel.07 bem vindo!" },
+      { user: "vini.97",      text: "alguém aqui também é do RS?" },
+      { user: "amanda.x",     text: "ngm aqui é de SP?" },
+      { user: "thiago.f",     text: "@vini.97 RS aqui também 🤝" },
+      { user: "carol.dz",     text: "@marina.s tem grupo do whats?" },
+
+      // -------- finais / saídas --------
+      { user: "paty.cd",      text: "vou ter q sair mas continuo escutando" },
+      { user: "vitor.ds",     text: "salvando link, volto pra rever" },
+      { user: "nina.r",       text: "essa eu vou rever 3x" },
+      { user: "bruno.rmt",    text: "tô gravando a tela kkk não conta" }
     ];
 
     // BLACK INSIGHTS (cards rotacionando no canto superior direito)

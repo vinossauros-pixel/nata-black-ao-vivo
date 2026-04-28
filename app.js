@@ -417,26 +417,54 @@
     chatCount.textContent = chatMsgCount > 999 ? '999+' : chatMsgCount;
   }
 
-  // Mensagens fake entram em ritmo natural
-  let fakeIdx = 0;
+  // Mensagens fake entram em ritmo natural com bursts ocasionais
+  let lastFakeMsg = null;
   function dropFakeMsg() {
     if (fakeChatPool.length === 0) return;
-    // pega aleatório, mas evita repetir o último
-    const m = fakeChatPool[Math.floor(Math.random() * fakeChatPool.length)];
+    let m;
+    let tries = 0;
+    do {
+      m = fakeChatPool[Math.floor(Math.random() * fakeChatPool.length)];
+      tries++;
+    } while (m === lastFakeMsg && tries < 5);
+    lastFakeMsg = m;
     appendMsg(m.user, m.text);
   }
-  // Burst inicial pra parecer chat ativo
+
+  // Burst inicial: 8 mensagens em sequência rápida, ritmo crescente
   function initialBurst() {
-    for (let i = 0; i < 6; i++) {
-      setTimeout(() => dropFakeMsg(), i * 350);
-    }
+    const seq = [120, 280, 200, 450, 320, 620, 380, 800];
+    let acc = 0;
+    seq.forEach(d => {
+      acc += d;
+      setTimeout(dropFakeMsg, acc);
+    });
   }
+
+  // Próxima mensagem solo (pausa natural)
   function scheduleNextFake() {
-    const delay = 2500 + Math.random() * 9000; // entre 2.5s e 11.5s
+    const delay = 1800 + Math.random() * 7500; // 1.8s a 9.3s
     setTimeout(() => {
       dropFakeMsg();
-      scheduleNextFake();
+      // ~12% de chance de virar burst (estilo "hype train" da Twitch)
+      if (Math.random() < 0.12) {
+        triggerHypeBurst();
+      } else {
+        scheduleNextFake();
+      }
     }, delay);
+  }
+
+  // Burst de hype: 3-6 mensagens em sequência rápida
+  function triggerHypeBurst() {
+    const count = 3 + Math.floor(Math.random() * 4);
+    let acc = 0;
+    for (let i = 0; i < count; i++) {
+      acc += 200 + Math.random() * 500;
+      setTimeout(dropFakeMsg, acc);
+    }
+    // Volta ao ritmo normal depois de pausa "respiro"
+    setTimeout(scheduleNextFake, acc + 2000 + Math.random() * 3000);
   }
 
   // Submit do chat (qualquer pessoa pode comentar)
