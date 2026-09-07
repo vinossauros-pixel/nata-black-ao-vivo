@@ -75,22 +75,23 @@
   }
 
   // ============================================
-  // ENTRADA DIRETA (default = sem senha, autoplay muted)
-  // Lock só ativa via atalho Ctrl+Shift+D
-  // DEV mode via URL ?dev=NATA5K
+  // ENTRADA: por padrão mostra tela de senha.
+  // Bypass: ?dev=NATA5K entra direto em modo dev.
   // ============================================
-  lockEl.style.display = 'none';
-  document.getElementById('splash').style.display = 'none';
-  document.getElementById('tv').hidden = false;
-
-  // DEV via URL: ?dev=NATA5K
   (async () => {
     const params = new URLSearchParams(location.search);
     const devParam = params.get('dev');
     if (devParam) {
       const h = await sha256(devParam.trim().toUpperCase());
-      if (h === HASH_DEV) enableDevMode();
+      if (h === HASH_DEV) {
+        DEV_MODE = true;
+        enterApp();
+        enableDevMode();
+        return;
+      }
     }
+    // sem bypass → foca o input da tela de senha
+    lockInput.focus();
   })();
 
   // Atalho secreto pra forçar dev mode (Ctrl+Shift+D)
